@@ -11,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
+import ohm.softa.a08.services.OpenMensaAPIService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import retrofit2.Call;
@@ -74,14 +75,8 @@ public class MainController implements Initializable {
 		meals = FXCollections.observableArrayList();
 		gson = new Gson();
 
-		/* initialize Retrofit instance */
-		var retrofit = new Retrofit.Builder()
-			.addConverterFactory(GsonConverterFactory.create(gson))
-			.baseUrl("http://openmensa.org/api/v2/")
-			.build();
-
-		/* create OpenMensaAPI instance */
-		api = retrofit.create(OpenMensaAPI.class);
+		OpenMensaAPIService svc = OpenMensaAPIService.getInstance();
+		api = svc.getMensaApiInstance();
 	}
 
 	/**
